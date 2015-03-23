@@ -1,16 +1,17 @@
 // CrossTalk
 // Fletcher Bach 2015	
+// v. 0.2
 
 {
-  "manifest_version": 2,
+  "manifest_version": 0.2,
 
   "name": "CrossTalk",
   "icons": {
     "128": "icon128.png"
   },
 
-  "description": "This extension obfuscates a user's linguistic identity by searching random words and phrases in a number of different languages.",
-  "version": "0.1",
+  "description": "Obfuscates a user's linguistic identity by searching random words and phrases in different languages.",
+  "version": "0.2",
 
   "browser_action": {
     "default_icon": "icon.png",
@@ -29,22 +30,22 @@
 
 
   "permissions": [
-    //"tabs",
+    "tabs",
     //"activeTab",
-    "https://ajax.googleapis.com/",
-    "http://www.google.com/*",
-    "https://www.google.com/*",
-    "http://www.google.se/*",
-    "https://www.google.se/*",
-    "http://www.google.de/*",
-    "https://www.google.de/*",
-    "http://www.google.fr/*",
-    "https://www.google.fr/*",
-    "http://www.google.pt/*",
-    "https://www.google.pt/*",
-    "http://www.bing.com/*",
-    "http://www.duckduckgo.com/*",
-    "http://www.wikipedia.org/*"
+    // "https://ajax.googleapis.com/",
+    // "http://www.google.com/*",
+     "https://www.google.com/*"
+    // "http://www.google.se/*",
+    // "https://www.google.se/*",
+    // "http://www.google.de/*",
+    // "https://www.google.de/*",
+    // "http://www.google.fr/*",
+    // "https://www.google.fr/*",
+    // "http://www.google.pt/*",
+    // "https://www.google.pt/*",
+    // "http://www.bing.com/*",
+    // "http://www.duckduckgo.com/*",
+    // "http://www.wikipedia.org/*"
     // "http://*/*",
     // "https://*/*"
   ]
