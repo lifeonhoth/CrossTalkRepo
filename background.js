@@ -1,29 +1,44 @@
-//var test = "test"
+// CrossTalk 2015
+// v. 0.2
+// fletcherbach.com
 
-var textJumbled;
+
 var text;
-var throughPut;
+var throughput;
 var toSearch;
+var intervalID;
+var isRunning = false;
 
-// text corpus
+// attaching text corpus to "text" variable
 var text = "As armas e os barões assinalados, Que da ocidental praia Lusitana, Por mares nunca de antes navegados, Passaram ainda além da Taprobana";
 
 
+// setting interval, calling all functions every 3 seconds
+// ALSO CALL STOPTIMER
+function startTimer(){
+  intervalID = setInterval(callingAllFunctions, 3000);
+  console.log("Here is a search query: " + toSearch)
+}
 
-//Called when user clicks on the browser action.
-chrome.browserAction.onClicked.addListener(function(tab) {
-  console.log('It\'s all Greek to ' + tab.url);
+function stopTimer(){
+  clearInterval(intervalID);
+}
+
+// setting up functions to call
+function callingAllFunctions() {
+  stripChars();
+  randomSelection();
+  replaceWhiteSpace();
+  constructURL();
+
   chrome.tabs.update({
-     url: toSearch
-	});
-});
+    url: toSearch
+  });
 
-randomSelection();
-replaceWhiteSpace();
-	
+  //return throughput;
+}
 
-
-// function for breaking down strings into smaller, parameter-determined chunks
+// breaking down strings into smaller, parameter-determined chunks
 function chunkString(str, len) {
   var _size = Math.ceil(str.length/len),
       _ret  = new Array(_size),
@@ -39,40 +54,55 @@ function chunkString(str, len) {
 
 }
 
+//stripping unwanted characters from text to prevent query choke later on
+function stripChars(){
+  text = text.replace(/õ/gi, "o");
+  text = text.replace(/é/gi, "e");
+  //add more / figure out a better way to handle
+}
+
 
 // selecting array index at random
 function randomSelection(){
-	var items = chunkString(text, 20);
-	throughPut = items[Math.floor(Math.random()*items.length)];
+  var items = chunkString(text, 20);  // to adjust length of desired search terms, adjust parameters
+  throughput = items[Math.floor(Math.random()*items.length)];
+  return throughput;
 }
 
 // replacing white space with '+' character
 function replaceWhiteSpace(){
-	throughPut = throughPut.split(' ').join('+');
-	textJumbled = throughPut; 
-	
+  throughput = throughput.split(' ').join('+');
+  return throughput;
+
 }
 
-// sotrying url 
-toSearch = "http://www.google.com/#q=" + textJumbled; 
+// finalizing url to search
+function constructURL() {
+  toSearch = "http://www.google.com/#q=" + throughput;
+  return toSearch;
+}
 
-
-console.log(throughPut);
-console.log(textJumbled);
-console.log(toSearch);
+// Called when user clicks on the browser action.
+chrome.browserAction.onClicked.addListener(function(tab) {
+  if (isRunning == true) { // if on, and user clicks off, stop timer
+    stopTimer()
+    isRunning = false;
+  } else {                 // if off, and user clicks on, start timer again
+    startTimer();
+    isRunning = true;
+  }
+  console.log('It\'s all Greek to ' + tab.url);
+  // chrome.tabs.update({
+  //   url: toSearch
+  // });
+});
 
 
 // TO DO:
-// -- DONE --HOW TO CUT UP RESULTING STRING SO AS TO SEARCH ONLY ONE 20str PIECE AT A TIME? ARRAY INDEXING?
+// -- DONE -- HOW TO CUT UP RESULTING STRING SO AS TO SEARCH ONLY ONE 20str PIECE AT A TIME? ARRAY INDEXING?
 // -- DONE -- INSERT "+" IN PLACE OF EACH WHITE SPACE
-// HANDLE CRAZY CHARS: CUT OUT , ' @ * etc.
-// LOOP SO TASK IS PERFROMED CONTINUALLY (WITH SOME DELAY)
-// HOW TO OPEN IN A NEW TAB INSTEAD OF USING ACTIVE TAB
-
-
-
-
-
-
-
-
+// -- DONE -- HANDLE UNWANTED CHARACTERS THAT CHOKE QUERY URL
+// -- DONE -- LOOP SO TASK IS PERFROMED CONTINUALLY (WITH SOME DELAY) (use setInterval?)
+// ATTACH TO OTHER TEXT CORPERA, LIVE OR STORED?
+// HOW TO OPEN IN A NEW TAB INSTEAD OF USING ACTIVE TAB?
+// ANIMATE ICON TO OFFER FEEDBACK TO USER WHEN EXTENSION IS TOGGELD ON OR OFF
