@@ -16,7 +16,7 @@ var text = "As armas e os barões assinalados, Que da ocidental praia Lusitana, 
 // setting interval, calling all functions every 3 seconds
 // ALSO CALL STOPTIMER
 function startTimer(){
-  intervalID = setInterval(callingAllFunctions, 3000);
+  intervalID = setInterval(callingAllFunctions, 5000);
   console.log("Here is a search query: " + toSearch)
 }
 
