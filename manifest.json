@@ -3,7 +3,7 @@
 // v. 0.2
 
 {
-  "manifest_version": 0.2,
+  "manifest_version": 2,
 
   "name": "CrossTalk",
   "icons": {
